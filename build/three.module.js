@@ -16119,12 +16119,23 @@ function WebGLRenderList() {
 
 	}
 
+	function cleanup() {
+
+		for ( var i = renderItemsIndex; i < renderItems.length; i++ ) {
+
+			renderItems[i] = undefined;
+
+		}
+
+	}
+
 	return {
 		opaque: opaque,
 		transparent: transparent,
 
 		init: init,
 		push: push,
+		cleanup: cleanup,
 
 		sort: sort
 	};
@@ -21861,6 +21872,8 @@ function WebGLRenderer( parameters ) {
 		currentRenderList.init();
 
 		projectObject( scene, camera, _this.sortObjects );
+
+		currentRenderList.cleanup();
 
 		if ( _this.sortObjects === true ) {
 
